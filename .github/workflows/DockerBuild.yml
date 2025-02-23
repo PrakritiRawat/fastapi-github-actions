@@ -1,0 +1,19 @@
+name: Docker Image Build and Push
+
+on: push  # Runs when code is pushed to the repository
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        run: echo "${{ secrets.DOCKERTOKEN }}" | docker login -u "kriti0917" --password-stdin
+
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t kriti0917/fastapi-app:latest .
+          docker push kriti0917/fastapi-app:latest
